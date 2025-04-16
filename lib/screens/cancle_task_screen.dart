@@ -18,10 +18,10 @@ class _CancleTaskScreenState extends State<CancleTaskScreen> {
       ),
       body: ListView.separated(
           itemBuilder: (context, index) {
-            return const TaskCare(
-              status: "cancel",
-              taskStatus: TaskStatus.cancle,
-            );
+            // return const TaskCared(
+            //   status: "cancel",
+            //   taskStatus: TaskStatus.cancle,
+            // );
           },
           separatorBuilder: (context, index) => const SizedBox(
                 height: 2,

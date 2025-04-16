@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:taskmenager_app/data/models/usermodel.dart';
 import 'package:taskmenager_app/screens/controller/authcontroller.dart';
@@ -204,6 +206,12 @@ class _UpdatePrfileState extends State<UpdatePrfile> {
     };
     if (_passwordTEController.text.isNotEmpty) {
       requestBody["password"] = _passwordTEController.text;
+    }
+
+    if (_pickImage != null) {
+      List<int> imageByte = await _pickImage!.readAsBytes();
+      String encodedImage = base64UrlEncode(imageByte);
+      requestBody['photo'] = encodedImage;
     }
     NetworkResponse response = await NetworkClient.postRequest(
       url: Urls.updateProfile,

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -24,10 +25,12 @@ class TMAppbar extends StatelessWidget implements PreferredSizeWidget {
         child: Row(
           children: [
             CircleAvatar(
-              backgroundImage: file != null
-                  ? FileImage(file!)
-                  : const NetworkImage(
-                      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZSUyMHBpY3R1cmV8ZW58MHx8MHx8fDA%3D"),
+              radius: 16,
+              backgroundImage: _shouldShowImage(Authcontroller.userModel?.photo)
+                  ? MemoryImage(
+                      base64Decode(Authcontroller.userModel?.photo ?? ''),
+                    )
+                  : null,
             ),
             const SizedBox(
               width: 12,
@@ -75,6 +78,10 @@ class TMAppbar extends StatelessWidget implements PreferredSizeWidget {
           builder: (context) => const LoginScreen(),
         ),
         (predicate) => false);
+  }
+
+  bool _shouldShowImage(String? photo) {
+    return photo != null && photo.isNotEmpty;
   }
 
   void _onTabProfile(BuildContext context) {

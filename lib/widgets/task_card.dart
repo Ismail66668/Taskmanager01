@@ -1,18 +1,30 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:taskmenager_app/data/models/taskmodel/taskmodel.dart';
 
 enum TaskStatus { sNew, progress, complete, cancle }
 
 enum TaskStatusText { sNew, progress, complete, cancle }
 
 // ignore: must_be_immutable
-class TaskCare extends StatelessWidget {
-  const TaskCare({Key? key, required this.taskStatus, required this.status})
-      : super(key: key);
+class TaskCared extends StatefulWidget {
+  // ignore: prefer_const_constructors_in_immutables, use_super_parameters
+  TaskCared({
+    Key? key,
+    required this.taskStatus,
+    required this.status,
+    required this.taskModel,
+  }) : super(key: key);
 
   final TaskStatus taskStatus;
   final String status;
+  final TaskModel taskModel;
 
+  @override
+  State<TaskCared> createState() => _TaskCaredState();
+}
+
+class _TaskCaredState extends State<TaskCared> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -23,12 +35,14 @@ class TaskCare extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "Titel",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            Text(
+              "widget.taskModel.titel",
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
             ),
-            const Text("Discription", style: TextStyle(fontSize: 12)),
-            const Text("Date : 12/10/25", style: TextStyle(fontSize: 12)),
+            Text("widget.taskModel.discription",
+                style: const TextStyle(fontSize: 12)),
+            Text("widget.taskModel.createDate",
+                style: const TextStyle(fontSize: 12)),
             const SizedBox(
               height: 5,
             ),
@@ -36,7 +50,7 @@ class TaskCare extends StatelessWidget {
               children: [
                 Chip(
                   label: Text(
-                    status,
+                    widget.status,
                     style: const TextStyle(color: Colors.white, fontSize: 14),
                   ),
                   padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -63,7 +77,7 @@ class TaskCare extends StatelessWidget {
 
   Color _getStatusColors() {
     late Color color;
-    switch (taskStatus) {
+    switch (widget.taskStatus) {
       // ignore: constant_pattern_never_matches_value_type
       case TaskStatus.sNew:
         color = Colors.blue;

@@ -21,10 +21,10 @@ class _CompletTaskScreenState extends State<CompletTaskScreen> {
       ),
       body: ListView.separated(
           itemBuilder: (context, index) {
-            return const TaskCare(
-              status: "complet",
-              taskStatus: TaskStatus.complete,
-            );
+            // return const TaskCared(
+            //   status: "complet",
+            //   taskStatus: TaskStatus.complete,
+            // );
           },
           separatorBuilder: (context, index) => const SizedBox(
                 height: 2,

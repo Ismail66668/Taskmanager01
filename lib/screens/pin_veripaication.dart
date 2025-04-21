@@ -1,12 +1,21 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
+
 import 'package:taskmenager_app/screens/email_varification.dart';
 import 'package:taskmenager_app/screens/set_password.dart';
 import 'package:taskmenager_app/widgets/screenbackground.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
+
+import '../data/service/netwark_client.dart';
+import '../data/urls/urls.dart';
 
 class PinVeripaication extends StatefulWidget {
-  const PinVeripaication({super.key});
+  const PinVeripaication({
+    Key? key,
+    required this.remail,
+  }) : super(key: key);
+  final String remail;
 
   @override
   State<PinVeripaication> createState() => _VaripiPinState();
@@ -66,7 +75,7 @@ class _VaripiPinState extends State<PinVeripaication> {
               height: 24,
             ),
             ElevatedButton(
-                onPressed: onTab,
+                onPressed: onTaptosetPassword,
                 child: const Icon(Icons.arrow_circle_right_outlined)),
             const SizedBox(
               height: 40,
@@ -90,19 +99,34 @@ class _VaripiPinState extends State<PinVeripaication> {
     );
   }
 
-  void onTab() {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const SetPassword(),
-        ));
-  }
-
   void onTablogin() {
     Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => const EmailVarification(),
         ));
+  }
+
+  void onTaptosetPassword() {
+    String sEmail = widget.remail;
+    String otp = _controller.text;
+    _oTPVarificationControlor(sEmail, otp);
+    print(sEmail);
+  }
+
+  Future<void> _oTPVarificationControlor(String nemail, String otp) async {
+    NetworkResponse response =
+        await NetworkClient.getRequest(url: Urls.otp(nemail, otp));
+    print(nemail);
+
+    if (response.isSuccess) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => SetPassword(
+                    nEmail: nemail,
+                    nOTP: otp,
+                  )));
+    } else {}
   }
 }

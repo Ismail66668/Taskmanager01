@@ -26,7 +26,7 @@ class NetworkClient {
     try {
       Uri uri = Uri.parse(url);
       Map<String, String> headers = {
-        'Content-type': 'Application/json',
+        'Content-type': 'application/json',
         'token': Authcontroller.token ?? '',
       };
       _preRequestCode(url, headers);
@@ -100,7 +100,7 @@ class NetworkClient {
     try {
       Uri uri = Uri.parse(url);
       Map<String, String> headers = {
-        'Content-type': 'Application/json',
+        'Content-type': 'application/json',
         'token': Authcontroller.token ?? '',
       };
       _preRequestCode(url, headers, body: body);

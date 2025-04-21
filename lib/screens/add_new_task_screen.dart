@@ -55,10 +55,10 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
               child: ListView.separated(
                   itemCount: _newTaskList.length,
                   itemBuilder: (context, index) {
-                    return TaskCared(
-                      status: "new",
+                    return TaskCard(
                       taskStatus: TaskStatus.sNew,
                       taskModel: _newTaskList[index],
+                      refreshList: _getAllNewTaskList,
                     );
                   },
                   separatorBuilder: (context, index) =>
@@ -124,6 +124,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
     if (response.isSuccess) {
       TaskListModel taskListModel = TaskListModel.fromJson(response.data ?? {});
       _newTaskList = taskListModel.taskList;
+      setState(() {});
     } else {}
 
     _getNewTasksInProgress = false;

@@ -7,6 +7,7 @@ import 'package:taskmenager_app/screens/controller/authcontroller.dart';
 import 'package:taskmenager_app/screens/main_bottom_nev_bar.dart';
 import 'package:taskmenager_app/widgets/screenbackground.dart';
 import '../widgets/showsnackbarmassag.dart';
+import 'email_varification.dart';
 import 'regestar.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -158,11 +159,11 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void onTapForgetPassword() {
-    // Navigator.push(
-    //     context,
-    //     MaterialPageRoute(
-    //       builder: (context) => const PinVarification(),
-    //     ));
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const EmailVarification(),
+        ));
   }
 
   void onTabSinUp() {

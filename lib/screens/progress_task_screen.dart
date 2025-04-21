@@ -34,12 +34,12 @@ class _ProgressTaskScreenState extends State<ProgressTaskScreen> {
           child: CircularProgressIndicator(),
         ),
         child: ListView.separated(
-          itemCount: 5,
+          itemCount: _taskmodel.length,
           itemBuilder: (context, index) {
-            return TaskCared(
-              taskModel: _taskmodel[index],
-              status: "progress",
+            return TaskCard(
               taskStatus: TaskStatus.progress,
+              taskModel: _taskmodel[index],
+              refreshList: _getAllProgressTask,
             );
           },
           separatorBuilder: (context, index) => const SizedBox(

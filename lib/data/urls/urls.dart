@@ -18,4 +18,10 @@ class Urls {
       '$_baseUrl/updateTaskStatus/$taskId/$status';
 
   static String deleteTaskUrl(String taskId) => '$_baseUrl/deleteTask/$taskId';
+  static String recoverEmail(String email) =>
+      '$_baseUrl/RecoverVerifyEmail/$email';
+
+  static String otp(String email, String otp) =>
+      '$_baseUrl/RecoverVerifyOtp/$email/$otp';
+  static const String recuverPassword = '$_baseUrl/RecoverResetPassword';
 }

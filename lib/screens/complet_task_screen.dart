@@ -38,17 +38,18 @@ class _CompletTaskScreenState extends State<CompletTaskScreen> {
           child: CircularProgressIndicator(),
         ),
         child: ListView.separated(
-            itemBuilder: (context, index) {
-              return TaskCared(
-                taskModel: _completModellist[index],
-                status: "complet",
-                taskStatus: TaskStatus.complete,
-              );
-            },
-            separatorBuilder: (context, index) => const SizedBox(
-                  height: 2,
-                ),
-            itemCount: 5),
+          itemCount: _completModellist.length,
+          itemBuilder: (context, index) {
+            return TaskCard(
+              taskStatus: TaskStatus.progress,
+              taskModel: _completModellist[index],
+              refreshList: _getCompletAllTask,
+            );
+          },
+          separatorBuilder: (context, index) => const SizedBox(
+            height: 2,
+          ),
+        ),
       ),
     );
   }
@@ -57,7 +58,7 @@ class _CompletTaskScreenState extends State<CompletTaskScreen> {
     _complerTaskInProgress = true;
     setState(() {});
     NetworkResponse response =
-        await NetworkClient.getRequest(url: Urls.createTaskUrl);
+        await NetworkClient.getRequest(url: Urls.completedTaskListUrl);
     if (response.isSuccess) {
       TaskListModel taskListModel = TaskListModel.fromJson(response.data!);
       _completModellist = taskListModel.taskList;

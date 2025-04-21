@@ -1,19 +1,22 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:taskmenager_app/data/service/netwark_client.dart';
+import 'package:taskmenager_app/data/urls/urls.dart';
 import 'package:taskmenager_app/screens/pin_veripaication.dart';
 import 'package:taskmenager_app/widgets/screenbackground.dart';
-import 'regestar.dart';
 
 class EmailVarification extends StatefulWidget {
   const EmailVarification({super.key});
 
   @override
-  State<EmailVarification> createState() => _PinVarificationState();
+  State<EmailVarification> createState() => _EmailVarificationState();
 }
 
-class _PinVarificationState extends State<EmailVarification> {
-  final TextEditingController _emailTEControlor = TextEditingController();
+class _EmailVarificationState extends State<EmailVarification> {
   final GlobalKey<FormState> _formkye = GlobalKey<FormState>();
+
+  final TextEditingController _emailTEContolor = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,17 +46,27 @@ class _PinVarificationState extends State<EmailVarification> {
               const SizedBox(
                 height: 24,
               ),
-              TextFormField(
-                keyboardType: TextInputType.emailAddress,
-                controller: _emailTEControlor,
-                textInputAction: TextInputAction.done,
-                decoration: const InputDecoration(hintText: "Email"),
+              Column(
+                children: [
+                  TextFormField(
+                    validator: (String? value) {
+                      if (value!.trim().isEmpty) {
+                        return "value is empty";
+                      }
+                      return null;
+                    },
+                    keyboardType: TextInputType.emailAddress,
+                    controller: _emailTEContolor,
+                    textInputAction: TextInputAction.done,
+                    decoration: const InputDecoration(hintText: "Email"),
+                  ),
+                ],
               ),
               const SizedBox(
                 height: 24,
               ),
               ElevatedButton(
-                  onPressed: onTap,
+                  onPressed: onSubmit,
                   child: const Icon(Icons.arrow_circle_right_outlined)),
               const SizedBox(
                 height: 40,
@@ -79,19 +92,38 @@ class _PinVarificationState extends State<EmailVarification> {
     );
   }
 
-  void onTap() {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const PinVeripaication(),
-        ));
+  void onSubmit() {
+    String email = _emailTEContolor.text;
+    _getOTPfromEmail(email);
   }
 
+  Future<void> _getOTPfromEmail(String email) async {
+    NetworkResponse response =
+        await NetworkClient.getRequest(url: Urls.recoverEmail(email));
+    if (response.isSuccess) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PinVeripaication(
+              remail: email,
+            ),
+          ));
+    } else {}
+  }
+
+  // void onTap() {
+  //   Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //         builder: (context) => const PinVeripaication(),
+  //       ));
+  // }
+
   void onTablogin() {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const RegestarScreen(),
-        ));
+    // Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //       builder: (context) => const RegestarScreen(),
+    //     ));
   }
 }
